@@ -15,7 +15,7 @@ It is possible to parallelize by linking Horovod with TensorFlow when adopting m
 ◦ The import statement for linking Horovod with TensorFlow and the Horovod initialization in the main function
 
 ```
-import horovod.tensorflow as hvd
+ import horovod.tensorflow as hvd
  ...
  hvd.init()
 ```
@@ -29,7 +29,7 @@ import horovod.tensorflow as hvd
 ◦ Set the dataset to use Horovod in the main function
 
 ```
-(x_train, y_train), (x_test, y_test) = \
+ (x_train, y_train), (x_test, y_test) = \
  keras.datasets.mnist.load_data('MNIST-data-%d' % hvd.rank())
 ```
 
@@ -40,7 +40,7 @@ import horovod.tensorflow as hvd
 ◦ Set the Horovod-related settings, broadcast, and number of training epochs for the optimizer in the main function
 
 ```
-opt = tf.train.AdamOptimizer(0.001 * hvd.size())
+ opt = tf.train.AdamOptimizer(0.001 * hvd.size())
  opt = hvd.DistributedOptimizer(opt)
  global_step = tf.train.get_or_create_global_step()
  train_op = opt.minimize(loss, global_step=global_step)
@@ -54,11 +54,9 @@ opt = tf.train.AdamOptimizer(0.001 * hvd.size())
 
 ◦ Allocate GPU devices according to the Horovod process rank
 
-```
-config = tf.ConfigProto()
- config.gpu_options.allow_growth = True
- config.gpu_options.visible_device_list = str(hvd.local_rank())
-```
+<pre><code><strong> config = tf.ConfigProto()
+</strong> config.gpu_options.allow_growth = True
+ config.gpu_options.visible_device_list = str(hvd.local_rank())</code></pre>
 
 ※ Allocate a single job for each GPU according to the Horovod local rank.
 
@@ -67,7 +65,7 @@ config = tf.ConfigProto()
 ◦ Set checkpoint for the rank 0 job
 
 ```
-checkpoint_dir = './checkpoints' if hvd.rank() == 0 else None
+ checkpoint_dir = './checkpoints' if hvd.rank() == 0 else None
  ...
  with tf.train.MonitoredTrainingSession(checkpoint_dir=checkpoint_dir,
  hooks=hooks,
@@ -90,11 +88,9 @@ By linking Keras with Horovod, parallelization is possible even when Keras APIs 
 
 ◦ The import statement for linking Horovod with Keras and the Horovod initialization in the main function
 
-```
-import horovod.tensorflow.keras as hvd
- ...
- hvd.init()
-```
+<pre><code><strong> import horovod.tensorflow.keras as hvd
+</strong> ...
+ hvd.init()</code></pre>
 
 **※ horovod.tensorflow.keras: a module for using Horovod with Keras in TensorFlow**
 
@@ -104,11 +100,9 @@ import horovod.tensorflow.keras as hvd
 
 ◦ Allocate GPU devices according to the Horovod process rank
 
-```
-config = tf.ConfigProto()
- config.gpu_options.allow_growth = True
- config.gpu_options.visible_device_list = str(hvd.local_rank())
-```
+<pre><code><strong> config = tf.ConfigProto()
+</strong> config.gpu_options.allow_growth = True
+ config.gpu_options.visible_device_list = str(hvd.local_rank())</code></pre>
 
 ※ Allocate a single job for each GPU according to the Horovod local rank.
 
@@ -117,7 +111,7 @@ config = tf.ConfigProto()
 ◦ Set the Horovod-related settings, broadcast, and number of training epochs for the optimizer in the main function
 
 ```
-epochs = int(math.ceil(12.0 / hvd.size()))
+ epochs = int(math.ceil(12.0 / hvd.size()))
  ...
  opt = keras.optimizers.Adadelta(1.0 * hvd.size())
  opt = hvd.DistributedOptimizer(opt)
@@ -164,7 +158,7 @@ It is possible to parallelize by linking Horovod with PyTorch when employing mul
 ◦ The import statement for linking Horovod with PyTorch and the Horovod initialization in the main function
 
 ```
-import torch.utils.data.distributed
+ import torch.utils.data.distributed
  import horovod.torch as hvd
  ...
  hvd.init()
@@ -185,16 +179,14 @@ import torch.utils.data.distributed
 
 ◦ Add Horovod-related information in the training process
 
-```
-def train(args, model, device, train_loader, optimizer, epoch):
- ...
+<pre><code><strong> def train(args, model, device, train_loader, optimizer, epoch):
+</strong> ...
  train_sampler.set_epoch(epoch)
  ...
      if batch_idx % args.log_interval == 0:
          print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                  epoch, batch_idx * len(data), len(train_sampler),
-                 100.* batch_idx / len(train_loader), loss.item()))
-```
+                 100.* batch_idx / len(train_loader), loss.item()))</code></pre>
 
 ※ train\_sampler.set\_epoch(epoch): sets the train sampler’s epoch
 
@@ -205,7 +197,7 @@ def train(args, model, device, train_loader, optimizer, epoch):
 ◦ Calculate the average value using Horovod
 
 ```
-def metric_average(val, name):
+ def metric_average(val, name):
  tensor = torch.tensor(val)
  avg_tensor = hvd.allreduce(tensor, name=name)
  return avg_tensor.item()
@@ -218,7 +210,7 @@ def metric_average(val, name):
 ◦ Add Horovod-related information in the test process
 
 ```
-test_loss /= len(test_sampler)
+ test_loss /= len(test_sampler)
  test_accuracy /= len(test_sampler)
  test_loss = metric_average(test_loss, 'avg_loss')
  test_accuracy = metric_average(test_accuracy, 'avg_accuracy')
@@ -235,9 +227,8 @@ test_loss /= len(test_sampler)
 
 ◦ Set dataset to use Horovod in the main function
 
-```
-train_dataset = datasets.MNIST('data-%d' % hvd.rank(), train=True, download=True,
- transform=transforms.Compose([transforms.ToTensor(),
+<pre><code><strong> train_dataset = datasets.MNIST('data-%d' % hvd.rank(), train=True, download=True,
+</strong> transform=transforms.Compose([transforms.ToTensor(),
  transforms.Normalize((0.1307,), (0.3081,)) ]))
  train_sampler = torch.utils.data.distributed.DistributedSampler(
  train_dataset, num_replicas=hvd.size(), rank=hvd.rank())
@@ -248,8 +239,7 @@ train_dataset = datasets.MNIST('data-%d' % hvd.rank(), train=True, download=True
  test_sampler = torch.utils.data.distributed.DistributedSampler(
  test_dataset, num_replicas=hvd.size(), rank=hvd.rank())
  test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=args.test_batch_size,
- sampler=test_sampler, **kwargs)
-```
+ sampler=test_sampler, **kwargs)</code></pre>
 
 ※ The dataset to be accessed for each job is set and created according to the Horovod rank.
 
@@ -260,7 +250,7 @@ train_dataset = datasets.MNIST('data-%d' % hvd.rank(), train=True, download=True
 ◦ Add Horovod-related settings to the optimizer and the sampler to the training and test process in the main function
 
 ```
-optimizer = optim.SGD(model.parameters(), lr=args.lr * hvd.size(), momentum=args.momentum)
+ optimizer = optim.SGD(model.parameters(), lr=args.lr * hvd.size(), momentum=args.momentum)
  hvd.broadcast_parameters(model.state_dict(), root_rank=0)
  hvd.broadcast_optimizer_state(optimizer, root_rank=0)
  optimizer = hvd.DistributedOptimizer(optimizer, named_parameters=model.named_parameters())
