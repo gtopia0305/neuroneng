@@ -9,7 +9,7 @@ Horovod adopts a standard message passing interface (MPI) model to send messages
 1\) Create a conda environment
 
 ```
-$ module load gcc/8.3.0 cuda/10.0 cudampi/openmpi-3.1.0 python/3.7.1
+ $ module load gcc/8.3.0 cuda/10.0 cudampi/openmpi-3.1.0 python/3.7.1
  $ conda create -n my_tensorflow
  $ source activate my_tensorflow
  (my_tensorflow)  $
@@ -22,7 +22,7 @@ $ module load gcc/8.3.0 cuda/10.0 cudampi/openmpi-3.1.0 python/3.7.1
 2\) Install and link the required libraries
 
 ```
-(my_tensorflow) $ conda install tensorflow-gpu python=3.7.1 cudnn cudatoolkit=10.0
+ (my_tensorflow) $ conda install tensorflow-gpu python=3.7.1 cudnn cudatoolkit=10.0
  (my_tensorflow) $ cd $HOME/.conda/envs/my_tensorflow/lib
  (my_tensorflow) $ ln -s /apps/applications/miniconda3/glibc-2.29/lib/libm-2.29.so libm.so.6
  (my_tensorflow) $ cp /apps/cuda/10.0/lib64/libnccl* .
@@ -37,7 +37,7 @@ $ module load gcc/8.3.0 cuda/10.0 cudampi/openmpi-3.1.0 python/3.7.1
 3\) Install Horovod
 
 ```
-(my_tensorflow) $ HOROVOD_NCCL_HOME=$HOME/.conda/envs/my_tensorflow
+ (my_tensorflow) $ HOROVOD_NCCL_HOME=$HOME/.conda/envs/my_tensorflow
  (my_tensorflow) $ HOROVOD_CUDA_HOME=/apps/cuda/10.0 
  (my_tensorflow) $ HOROVOD_GPU_ALLREDUCE=NCCL
  (my_tensorflow) $ HOROVOD_WITH_TENSORFLOW=1 
