@@ -8,13 +8,13 @@ Anaconda is a distribution that provides a collection of packages written in Pyt
 
 &#x20;  ****  &#x20;
 
-{% code title=" ◦ Use conda and create a conda environment" %}
+&#x20;**** ◦ Use conda and create a conda environment
+
 ```
 $ module load python/3.7.1
 $ conda create -n [conda_env_name] --use-local
 $ conda env list
 ```
-{% endcode %}
 
 ※ \[conda\_env\_name]: the environment name to be used
 
@@ -26,21 +26,21 @@ $ conda env list
 
 
 
-{% code title="◦ Activate the conda environment" %}
+◦ Activate the conda environment
+
 ```
 $ source activate [conda_env_name]
  ([conda_env_name])l
 ```
-{% endcode %}
 
 
 
-{% code title="◦ Install and check packages in the conda environment" %}
+◦ Install and check packages in the conda environment
+
 ```
 ([conda_env_name])$ conda install [pakage_name(ex:numpy, pandas, scikit-learn, tensorflow-gpu...)]
  ([conda_env_name])$ conda list
 ```
-{% endcode %}
 
 ※ It is recommended to install pages using “conda install” for version management.
 
@@ -50,11 +50,11 @@ $ source activate [conda_env_name]
 
 
 
-{% code title="◦ Deactivate the conda environment" %}
+◦ Deactivate the conda environment
+
 ```
 ([conda_env_name])$ conda deactivate
 ```
-{% endcode %}
 
 {% hint style="info" %}
 2021년 12월 2일에 마지막으로 업데이트되었습니다.

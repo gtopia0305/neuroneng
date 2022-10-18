@@ -60,8 +60,7 @@ For Anaconda, you can download a version suitable for each OS from the [https://
 
 
 
-\- Example -
-
+{% code title="- Example -" %}
 ```
 $ module load python/3.7.1
 $ conda create -n scikit-learn_0.21 --use-local
@@ -88,6 +87,7 @@ Executing transaction: done
 $ source activate scikit-learn_0.21
 (scikit-learn_0.21) $
 ```
+{% endcode %}
 
 ## 3. Install and Check Packages in Conda Environment
 
@@ -99,8 +99,7 @@ $ source activate scikit-learn_0.21
 
 
 
-\- Example -
-
+{% code title="- Example -" %}
 ```
 $ module load python/3.7.1
 $ source activate scikit-learn_0.21
@@ -141,6 +140,7 @@ Executing transaction: done
 (scikit-learn_0.21) $ python -c "import sklearn"
 (scikit-learn_0.21) $
 ```
+{% endcode %}
 
 ## 4. Check Conda Environment List
 
@@ -148,8 +148,7 @@ Executing transaction: done
 
 
 
-\-Example-
-
+{% code title="-Example-" %}
 ```
 (scikit-learn_0.21) $ conda env list
 # conda environments:
@@ -159,6 +158,7 @@ scikit-learn_0.21     *  /home01/userID/.conda/envs/scikit-learn_0.21
 (scikit-learn_0.21) $ conda deactivate
 $
 ```
+{% endcode %}
 
 ## 5. Remove Conda Environment
 
@@ -166,14 +166,14 @@ $
 
 
 
-\-Example-
-
+{% code title="-Example-" %}
 ```
 $ module load python/3.7.1
 $ conda env remove -n scikit-learn_0.21
 Remove all packages in environment /home01/userID/.conda/envs/scikit-learn_0.21:
 $
 ```
+{% endcode %}
 
 
 
@@ -187,8 +187,7 @@ $
 
 (Example) When the external Internet is not connected, the same conda environment is used in another system
 
-\-Example-
-
+{% code title="-Example-" %}
 ```
 $ module load python/3.7.1
 $ source activate tensorflow_1.12
@@ -201,6 +200,7 @@ Packing environment at '/home01/userID/.conda/envs/tensorflow_1.12' to 'conda_te
 -rw-------. 1 userID in0162 1459826406 Mar 28 15:03 conda_tensorflow_1.12.tar.gz
 (tensorflow_1.12) $
 ```
+{% endcode %}
 
 ## 7. Import Conda Environment
 
@@ -208,8 +208,7 @@ Packing environment at '/home01/userID/.conda/envs/tensorflow_1.12' to 'conda_te
 
 
 
-\-Example-
-
+{% code title="-Example-" %}
 ```
 $ module load python/3.7.1
 $ mkdir -p $HOME/.conda/envs/tensorflow_1.12
@@ -218,6 +217,7 @@ $ source activate tensorflow_1.12
 (tensorflow_1.12) $ conda deactivate
 $
 ```
+{% endcode %}
 
 {% hint style="info" %}
 2021년 12월 2일에 마지막으로 업데이트되었습니다.
