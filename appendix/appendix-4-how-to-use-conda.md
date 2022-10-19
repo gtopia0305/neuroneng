@@ -8,7 +8,7 @@ Anaconda is a distribution that provides a collection of packages written in Pyt
 
 &#x20;  ****  &#x20;
 
-&#x20;**** ◦ Use conda and create a conda environment
+◦ Use conda and create a conda environment
 
 ```
 $ module load python/3.7.1
